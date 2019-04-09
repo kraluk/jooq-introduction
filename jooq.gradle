@@ -29,7 +29,7 @@ jooq {
                 relations = true
                 deprecated = false
                 records = true
-                immutablePojos = false
+                immutablePojos = true
                 fluentSetters = true
                 daos = false
             }

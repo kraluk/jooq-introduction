@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 
 import ratpack.hikari.HikariModule;
-import ratpack.jdbctx.Transaction;
 import ratpack.server.ServerConfig;
 
 /**
@@ -40,6 +39,8 @@ public final class RepositoryModule extends HikariModule {
     @Provides
     @Singleton
     DSLContext dslContext(final DataSource dataSource) {
-        return DSL.using(Transaction.dataSource(dataSource), SQLDialect.H2);
+        return DSL.using(
+            dataSource,
+            SQLDialect.H2);
     }
 }

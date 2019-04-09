@@ -1,5 +1,6 @@
 package io.kraluk.playground.jooq;
 
+import io.kraluk.playground.jooq.business.BusinessModule;
 import io.kraluk.playground.jooq.core.CoreModule;
 import io.kraluk.playground.jooq.core.repository.RepositoryModule;
 
@@ -17,7 +18,7 @@ import ratpack.server.RatpackServer;
  *
  * @author lukasz
  */
-public final class JooqPlaygroundApp {
+public class JooqPlaygroundApp {
     private static final Logger log = LoggerFactory.getLogger(JooqPlaygroundApp.class);
 
     public static void main(final String... args) throws Exception {
@@ -32,6 +33,9 @@ public final class JooqPlaygroundApp {
                 // Technical modules
                 .module(CoreModule.class)
                 .module(RepositoryModule.class)
+
+                // Business modules
+                .module(BusinessModule.class)
             ))
             .handlers(chain -> chain
                 .get("", ctx -> ctx.byContent(m -> m

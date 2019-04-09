@@ -20,10 +20,10 @@ ext {
 }
 
 repositories {
-        mavenLocal()
-        mavenCentral()
-        jcenter()
-    }
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
 
 apply from: "jooq.gradle"
 
@@ -53,9 +53,7 @@ dependencies {
     testCompile group: "io.ratpack", name: "ratpack-groovy-test", version: "$ratpackVersion"
     testCompile group: "org.codehaus.groovy", name: "groovy-all", version: "$groovyVersion"
     testCompile group: "org.spockframework", name: "spock-core", version: "$spockVersion"
-    testCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
-    testCompile group: "net.bytebuddy", name: "byte-buddy", version: "1.9.12"
-    testCompile group: "org.objenesis", name: "objenesis", version: "3.0.1"
+    testCompile group: "org.spockframework", name: "spock-guice", version: "$spockVersion"
 }
 
 applicationDefaultJvmArgs = ["--add-opens", "java.base/java.lang=ALL-UNNAMED",
