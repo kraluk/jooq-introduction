@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p --- [%6t] %c{1.}:%L: %m%n</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>./log/jooq-playground-test.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>./log/jooq-playground-test.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p --- [%6t] %c{1.}:%L: %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <root>
+        <level value="INFO"/>
+        <appender-ref ref="dailyRollingFileAppender"/>
+        <appender-ref ref="consoleAppender"/>
+    </root>
+
+    <logger name="io.kraluk" additivity="false">
+        <level value="TRACE"/>
+        <appender-ref ref="dailyRollingFileAppender"/>
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
+    <logger name="io.netty" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="dailyRollingFileAppender"/>
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
+    <logger name="ratpack" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="dailyRollingFileAppender"/>
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
+</configuration>

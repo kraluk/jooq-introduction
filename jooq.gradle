@@ -1,0 +1,43 @@
+dependencies {
+
+    jooqRuntime group: "com.h2database", name: "h2", version: "1.4.199"
+    jooqRuntime group: "org.glassfish.jaxb", name: "jaxb-runtime", version: "2.3.2"
+    jooqRuntime group: "com.sun.activation", name: "javax.activation", version: "1.2.0"
+
+    compile group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"
+}
+
+jooq {
+    version = "$jooqVersion"
+    edition = "OSS"
+
+    sakila(sourceSets.main) {
+        String initSchema = "$projectDir/src/main/sql/sakila-ddl.sql".replaceAll("\\\\", "/")
+
+        jdbc {
+            driver = "org.h2.Driver"
+            url = "jdbc:h2:mem:jooqplayground;INIT=RUNSCRIPT FROM '$initSchema'"
+        }
+        generator {
+            name = "org.jooq.codegen.DefaultGenerator"
+            database {
+                name = "org.jooq.meta.h2.H2Database"
+                includes = ".*"
+                excludes = "information_schema"
+            }
+            generate {
+                relations = true
+                deprecated = false
+                records = true
+                immutablePojos = false
+                fluentSetters = true
+                daos = false
+            }
+            target {
+                packageName = "io.kraluk.playground.jooq.db"
+            }
+        }
+    }
+}
+
+project.tasks.getByName("compileJava").dependsOn -= "generateSakilaJooqSchemaSource"

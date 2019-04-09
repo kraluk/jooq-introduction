@@ -1,0 +1,94 @@
+plugins {
+    id "application"
+    id "java"
+    id "groovy"
+    id "idea"
+
+    id "com.ofg.uptodate" version "1.6.3"
+    id "io.ratpack.ratpack-java" version "1.6.0"
+    id "nu.studer.jooq" version "3.0.3"
+}
+
+ext {
+    projectVersion = "1.0.0-SNAPSHOT"
+
+    javaVersion = JavaVersion.VERSION_11
+    groovyVersion = "2.5.6"
+    spockVersion = "1.3-groovy-2.5"
+    ratpackVersion = "1.6.0"
+    jooqVersion = "3.11.10"
+}
+
+repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+apply from: "jooq.gradle"
+
+description = "Jooq Playground"
+
+group "io.kraluk.playground.jooq"
+version "$projectVersion"
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+dependencies {
+    compile group: "io.ratpack", name: "ratpack-core", version: "$ratpackVersion"
+    compile group: "io.ratpack", name: "ratpack-guice", version: "$ratpackVersion"
+    compile group: "io.ratpack", name: "ratpack-hikari", version: "$ratpackVersion"
+    compile group: "io.ratpack", name: "ratpack-h2", version: "$ratpackVersion"
+    compile group: "io.ratpack", name: "ratpack-jdbc-tx", version: "$ratpackVersion"
+
+    compile group: "com.h2database", name: "h2", version: "1.4.199"
+    compile group: "org.jooq", name: "jooq", version: "$jooqVersion"
+
+    runtime group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
+    runtime group: "ch.qos.logback", name: "logback-classic", version: "1.2.3"
+    runtime group: "ch.qos.logback", name: "logback-core", version: "1.2.3"
+
+    testCompile group: "io.ratpack", name: "ratpack-test", version: "$ratpackVersion"
+    testCompile group: "io.ratpack", name: "ratpack-groovy-test", version: "$ratpackVersion"
+    testCompile group: "org.codehaus.groovy", name: "groovy-all", version: "$groovyVersion"
+    testCompile group: "org.spockframework", name: "spock-core", version: "$spockVersion"
+    testCompile group: "org.hamcrest", name: "hamcrest-all", version: "1.3"
+    testCompile group: "net.bytebuddy", name: "byte-buddy", version: "1.9.12"
+    testCompile group: "org.objenesis", name: "objenesis", version: "3.0.1"
+}
+
+applicationDefaultJvmArgs = ["--add-opens", "java.base/java.lang=ALL-UNNAMED",
+                             "--add-exports", "java.base/jdk.internal.misc=ALL-UNNAMED",
+                             "-Dio.netty.tryReflectionSetAccessible=true",
+                             "--illegal-access=warn"]
+
+mainClassName = "io.kraluk.playground.jooq.JooqPlaygroundApp"
+
+compileJava {
+    options.incremental = true
+    options.compilerArgs << "-parameters"
+    options.compilerArgs << "-Xlint:unchecked"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    options.compilerArgs.add("-parameters")
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat = "full"
+    }
+}
+
+uptodate {
+    connectionTimeout = 10000
+}
+
+check.dependsOn "uptodate"
+
+wrapper {
+    gradleVersion = "5.3.1"
+}
