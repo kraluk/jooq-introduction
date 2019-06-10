@@ -24,7 +24,7 @@ jooq {
             database {
                 name = "org.jooq.meta.h2.H2Database"
                 includes = ".*"
-                excludes = "information_schema"
+                excludes = "information_schema.*"
             }
             generate {
                 // All options:
