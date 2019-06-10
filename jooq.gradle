@@ -12,11 +12,12 @@ jooq {
     edition = "OSS"
 
     sakila(sourceSets.main) {
-        String initSchema = "$projectDir/src/main/sql/sakila-ddl.sql".replaceAll("\\\\", "/")
+        String ddlScripts = parsePath("$projectDir/src/main/sql/sakila-ddl.sql")
+        String proceduresScripts = parsePath("$projectDir/src/main/sql/sakila-procedures.sql")
 
         jdbc {
             driver = "org.h2.Driver"
-            url = "jdbc:h2:mem:jooqplayground;INIT=RUNSCRIPT FROM '$initSchema'"
+            url = "jdbc:h2:mem:jooqplayground;INIT=RUNSCRIPT FROM '$ddlScripts'\\;RUNSCRIPT FROM '$proceduresScripts'"
         }
         generator {
             name = "org.jooq.codegen.DefaultGenerator"
@@ -26,18 +27,33 @@ jooq {
                 excludes = "information_schema"
             }
             generate {
+                // All options:
+                // https://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd
+                // https://www.jooq.org/doc/3.11/manual/code-generation/codegen-advanced/
+
                 relations = true
                 deprecated = false
+
                 records = true
-                immutablePojos = true
                 fluentSetters = true
+
+                pojos = false
+                immutablePojos = true
+
                 daos = false
+
+                javaTimeTypes = false
+                validationAnnotations = false
             }
             target {
                 packageName = "io.kraluk.playground.jooq.db"
             }
         }
     }
+}
+
+static def parsePath(String path) {
+    path.replaceAll("\\\\", "/")
 }
 
 project.tasks.getByName("compileJava").dependsOn -= "generateSakilaJooqSchemaSource"

@@ -33,7 +33,7 @@ public final class RepositoryModule extends HikariModule {
         config.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
         config.addDataSourceProperty(
             "URL",
-            "jdbc:h2:mem:jooqplayground;INIT=RUNSCRIPT FROM './src/main/sql/sakila-ddl.sql'\\;RUNSCRIPT FROM './src/main/sql/sakila-dml.sql'");
+            "jdbc:h2:mem:jooqplayground;INIT=RUNSCRIPT FROM './src/main/sql/sakila-ddl.sql'\\;RUNSCRIPT FROM './src/main/sql/sakila-procedures.sql'\\;RUNSCRIPT FROM './src/main/sql/sakila-dml.sql'");
     }
 
     @Provides
