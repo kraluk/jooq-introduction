@@ -39,6 +39,7 @@ jooq {
 
                 pojos = false
                 immutablePojos = true
+                pojosEqualsAndHashCode = true
 
                 daos = false
                 springAnnotations = false

@@ -39,4 +39,14 @@ class ActorRepositorySpec extends IntegrationSpecification {
         then:
         result == "THORA TEMPLE"
     }
+
+    def "should find all"() {
+        when:
+        def result = repository.findAll()
+
+        then:
+        result != null
+        and:
+        result.size() == 100
+    }
 }

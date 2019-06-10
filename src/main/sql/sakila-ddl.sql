@@ -199,7 +199,7 @@ CREATE SEQUENCE film_sequence;
 
 CREATE TABLE film_actor
 (
-    actor_id    INT         NOT NULL AUTO_INCREMENT,
+    actor_id    LONG        NOT NULL AUTO_INCREMENT,
     film_id     INT         NOT NULL,
     last_update TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT pk_film_actor PRIMARY KEY (actor_id, film_id),

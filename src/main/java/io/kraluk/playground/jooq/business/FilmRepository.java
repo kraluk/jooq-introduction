@@ -1,6 +1,7 @@
 package io.kraluk.playground.jooq.business;
 
 import io.kraluk.playground.jooq.core.repository.Repository;
+import io.kraluk.playground.jooq.db.playground.tables.pojos.Actor;
 import io.kraluk.playground.jooq.db.playground.tables.pojos.Film;
 
 import org.jooq.DSLContext;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static io.kraluk.playground.jooq.db.playground.Tables.ACTOR;
+import static io.kraluk.playground.jooq.db.playground.Tables.FILM_ACTOR;
 import static io.kraluk.playground.jooq.db.playground.tables.Film.FILM;
 import static org.jooq.impl.DSL.max;
 
@@ -25,7 +28,7 @@ public class FilmRepository implements Repository<Integer, Film> {
 
     private final DSLContext context;
 
-    FilmRepository(DSLContext context) {
+    FilmRepository(final DSLContext context) {
         this.context = context;
     }
 
@@ -153,5 +156,18 @@ public class FilmRepository implements Repository<Integer, Film> {
                 FILM.FILM_ID
             )
             .fetchGroups(FILM.RELEASE_YEAR, FILM.FILM_ID);
+    }
+
+    public Map<Film, List<Actor>> findWithActors() {
+        return context
+            .select()
+            .from(FILM)
+            .leftJoin(FILM_ACTOR).on(FILM.FILM_ID.eq(FILM_ACTOR.FILM_ID))
+            .leftJoin(ACTOR).on(ACTOR.ACTOR_ID.eq(FILM_ACTOR.ACTOR_ID))
+            .orderBy(FILM.TITLE.asc())
+            .limit(100) // limits before grouping!
+            .fetchGroups( // == GROUP BY
+                r -> r.into(FILM).into(Film.class),
+                r -> r.into(ACTOR).into(Actor.class));
     }
 }

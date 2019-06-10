@@ -1,5 +1,7 @@
 package io.kraluk.playground.jooq.business
 
+import io.kraluk.playground.jooq.db.playground.tables.pojos.Actor
+import io.kraluk.playground.jooq.db.playground.tables.pojos.Film
 import io.kraluk.playground.jooq.test.IntegrationSpecification
 import org.jooq.exception.DataAccessException
 
@@ -104,5 +106,13 @@ class FilmRepositorySpec extends IntegrationSpecification {
 
         then:
         lastUpdated.size() >= 1
+    }
+
+    def "should find films with their actors"() {
+        when:
+        def result = repository.findWithActors()
+
+        then:
+        result.size() > 0
     }
 }
