@@ -41,6 +41,8 @@ jooq {
                 immutablePojos = true
 
                 daos = false
+                springAnnotations = false
+                jpaAnnotations = false
 
                 javaTimeTypes = false
                 validationAnnotations = false
