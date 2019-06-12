@@ -95,8 +95,8 @@ class FilmRepositorySpec extends IntegrationSpecification {
 
         then:
         with(result) {
-            keySet().size() >= 5
-            entrySet().size() >= 5
+            keySet().size() == 5
+            entrySet().size() == 5
         }
     }
 

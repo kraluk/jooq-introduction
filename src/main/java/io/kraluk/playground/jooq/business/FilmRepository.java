@@ -166,7 +166,7 @@ public class FilmRepository implements Repository<Integer, Film> {
             .leftJoin(ACTOR).on(ACTOR.ACTOR_ID.eq(FILM_ACTOR.ACTOR_ID))
             .orderBy(FILM.TITLE.asc())
             .limit(100) // limits before grouping!
-            .fetchGroups( // == GROUP BY
+            .fetchGroups( // == GROUP BY on the Java level
                 r -> r.into(FILM).into(Film.class),
                 r -> r.into(ACTOR).into(Actor.class));
     }

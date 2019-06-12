@@ -62,10 +62,7 @@ public class ActorRepository {
         final ShowLatestActor procedure = new ShowLatestActor();
 
         procedure.execute(context.configuration());
-        return procedure.getResults().stream().findFirst()
-            .map(r -> r.get(0))
-            .map(String::valueOf)
-            .orElseThrow(() -> new IllegalStateException("Unable to find the latest actor!"));
+        return procedure.getReturnValue();
     }
 
     public String findLatestActorViaRoutines() {

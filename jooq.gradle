@@ -36,17 +36,16 @@ jooq {
 
                 records = true
                 fluentSetters = true
+                javaTimeTypes = false
 
                 pojos = false
                 immutablePojos = true
                 pojosEqualsAndHashCode = true
+                validationAnnotations = false
 
                 daos = false
                 springAnnotations = false
                 jpaAnnotations = false
-
-                javaTimeTypes = false
-                validationAnnotations = false
             }
             target {
                 packageName = "io.kraluk.playground.jooq.db"
@@ -59,4 +58,4 @@ static def parsePath(String path) {
     path.replaceAll("\\\\", "/")
 }
 
-// project.tasks.getByName("compileJava").dependsOn -= "generateSakilaJooqSchemaSource"
+project.tasks.getByName("compileJava").dependsOn -= "generateSakilaJooqSchemaSource"
