@@ -58,4 +58,4 @@ static def parsePath(String path) {
     path.replaceAll("\\\\", "/")
 }
 
-project.tasks.getByName("compileJava").dependsOn -= "generateSakilaJooqSchemaSource"
+// project.tasks.getByName("compileJava").dependsOn -= "generateSakilaJooqSchemaSource"
