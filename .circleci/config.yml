@@ -21,6 +21,6 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: jooq-playground-{{ checksum "build.gradle" }}
+          key: jp-dependencies-{{ checksum "build.gradle" }}
 
       - run: ./gradlew test
