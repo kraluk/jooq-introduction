@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/kraluk/jooq-introduction/tree/master.svg?style=svg)](https://circleci.com/gh/kraluk/jooq-introduction/tree/master)
+
 # jOOQ Playground
 
 ## Technicalities
