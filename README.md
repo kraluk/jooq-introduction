@@ -32,6 +32,10 @@ Stuff used in this project:
    ./gradlew run -t
    ```
    
+## Slides
+
+Slides related to this code are available [here](docs).
+   
 ## Possible problems running the app on Java 9+
 
 1. As [Ratpack][3] uses [Guice][4] and [Netty][5], they can complain a lot complain due to some Java 9+ limitations and to bypass them, there is a need to use the following JVM parameters:
