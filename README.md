@@ -17,7 +17,9 @@ Stuff used in this project:
    ```bash
    ./gradlew generateSakilaJooqSchemaSource
    ```
-   If there will be need to regenerate the schema by each build, comment out or remove line `project.tasks.getByName("compileJava").dependsOn -= "generateSakilaJooqSchemaSource"` from the `jooq.gradle` file located in the root of this project.
+   **Note:** by default this task is enabled in correlation with the `compileJava` task, therefore all Gradle builds should take it into account.
+   
+   If there will be a need to regenerate the schema in separation from code builds, uncomment the line `project.tasks.getByName("compileJava").dependsOn -= "generateSakilaJooqSchemaSource"` from the `jooq.gradle` file located in the root of this project.
 
 2. Run the app using Ratpack Gradle plugin:
    ```bash
